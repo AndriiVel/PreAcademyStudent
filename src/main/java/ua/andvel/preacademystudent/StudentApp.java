@@ -1,5 +1,9 @@
 package ua.andvel.preacademystudent;
 
+import com.devskiller.jfairy.Fairy;
+import com.devskiller.jfairy.producer.RandomGenerator;
+import com.devskiller.jfairy.producer.person.Person;
+
 import java.util.*;
 import java.util.function.ToIntFunction;
 
@@ -167,5 +171,19 @@ class StudentApp {
                 new PreAcademyStudent("F", "U", 2, 4, 5),
                 new PreAcademyStudent("D", "T", 3, 2, 4),
         };
+    }
+
+    PreAcademyStudent[] generatePreAcademyStudents(int times) {
+        PreAcademyStudent[] students = new PreAcademyStudent[times];
+        Fairy fairy = Fairy.create();
+        com.devskiller.jfairy.producer.RandomGenerator rand = new RandomGenerator();
+
+        for (int i = 0; i < times; i++) {
+            Person person = fairy.person();
+            students[i] = new PreAcademyStudent(person.getFirstName(), person.getLastName(), rand.nextInt(1, 5),
+                    rand.nextInt(1, 5), rand.nextInt(1, 5));
+        }
+
+        return students;
     }
 }
