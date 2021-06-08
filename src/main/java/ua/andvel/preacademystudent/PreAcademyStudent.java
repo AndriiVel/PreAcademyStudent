@@ -43,8 +43,11 @@ record PreAcademyStudent(String firstName, String lastName, int lecturesPoints, 
      * @param function a function that the Comparator will be based on
      * @return         a Comparator of students
      */
-    static Comparator<PreAcademyStudent> getComparatorFor(ToIntFunction<? super PreAcademyStudent> function) {
-        return Comparator.comparingInt(function);
+    static Comparator<PreAcademyStudent> getReversedComparatorFor(ToIntFunction<PreAcademyStudent> function) {
+        return Comparator.comparingInt(function)
+                .reversed()
+                .thenComparing(PreAcademyStudent::firstName)
+                .thenComparing(PreAcademyStudent::lastName);
     }
 
     @Override

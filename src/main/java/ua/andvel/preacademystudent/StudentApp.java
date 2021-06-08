@@ -66,9 +66,10 @@ class StudentApp {
      * @param function a function that retrieves type of points based on which the sorting should be done
      * @return         sorted array
      */
-    PreAcademyStudent[] orderStudentsPer(ToIntFunction<? super PreAcademyStudent> function, PreAcademyStudent[] preAcademyStudents) {
-        Comparator<PreAcademyStudent> comparator = PreAcademyStudent.getComparatorFor(function);
-        Arrays.sort(preAcademyStudents, Collections.reverseOrder(comparator));
+    PreAcademyStudent[] orderStudentsPer(ToIntFunction<PreAcademyStudent> function,
+                                         PreAcademyStudent[] preAcademyStudents) {
+        Comparator<PreAcademyStudent> comparator = PreAcademyStudent.getReversedComparatorFor(function);
+        Arrays.sort(preAcademyStudents, comparator);
         return preAcademyStudents;
     }
 
@@ -80,8 +81,9 @@ class StudentApp {
      * @return                   sorted array
      */
     PreAcademyStudent[] orderStudentsPerAllPoints(PreAcademyStudent[] preAcademyStudents) {
-        Comparator<PreAcademyStudent> comparator = PreAcademyStudent.getComparatorFor(PreAcademyStudent::totalPoints);
-        Arrays.sort(preAcademyStudents, Collections.reverseOrder(comparator));
+        Comparator<PreAcademyStudent> comparator =
+                PreAcademyStudent.getReversedComparatorFor(PreAcademyStudent::totalPoints);
+        Arrays.sort(preAcademyStudents, comparator);
         return preAcademyStudents;
     }
 
@@ -93,8 +95,9 @@ class StudentApp {
      * @return                   sorted array
      */
     PreAcademyStudent[] orderStudentsPerLecturesPoints(PreAcademyStudent[] preAcademyStudents) {
-        Comparator<PreAcademyStudent> comparator = PreAcademyStudent.getComparatorFor(PreAcademyStudent::lecturesPoints);
-        Arrays.sort(preAcademyStudents, Collections.reverseOrder(comparator));
+        Comparator<PreAcademyStudent> comparator =
+                PreAcademyStudent.getReversedComparatorFor(PreAcademyStudent::lecturesPoints);
+        Arrays.sort(preAcademyStudents, comparator);
         return preAcademyStudents;
     }
 
@@ -106,8 +109,9 @@ class StudentApp {
      * @return                   sorted array
      */
     PreAcademyStudent[] orderStudentsPerTasksPoints(PreAcademyStudent[] preAcademyStudents) {
-        Comparator<PreAcademyStudent> comparator = PreAcademyStudent.getComparatorFor(PreAcademyStudent::tasksPoints);
-        Arrays.sort(preAcademyStudents, Collections.reverseOrder(comparator));
+        Comparator<PreAcademyStudent> comparator =
+                PreAcademyStudent.getReversedComparatorFor(PreAcademyStudent::tasksPoints);
+        Arrays.sort(preAcademyStudents, comparator);
         return preAcademyStudents;
     }
 
@@ -119,8 +123,9 @@ class StudentApp {
      * @return                   sorted array
      */
     PreAcademyStudent[] orderStudentsPerActivityPoints(PreAcademyStudent[] preAcademyStudents) {
-        Comparator<PreAcademyStudent> comparator = PreAcademyStudent.getComparatorFor(PreAcademyStudent::activityPoints);
-        Arrays.sort(preAcademyStudents, Collections.reverseOrder(comparator));
+        Comparator<PreAcademyStudent> comparator =
+                PreAcademyStudent.getReversedComparatorFor(PreAcademyStudent::activityPoints);
+        Arrays.sort(preAcademyStudents, comparator);
         return preAcademyStudents;
     }
 
@@ -146,9 +151,21 @@ class StudentApp {
      * @param function a function that retrieves type of points based on which the sorting should be done
      * @return         sorted array
      */
-    PreAcademyStudent[] per(ToIntFunction<? super PreAcademyStudent> function) {
-        Comparator<PreAcademyStudent> comparator = PreAcademyStudent.getComparatorFor(function);
-        Arrays.sort(studentsToSort, Collections.reverseOrder(comparator));
+    PreAcademyStudent[] per(ToIntFunction<PreAcademyStudent> function) {
+        Comparator<PreAcademyStudent> comparator = PreAcademyStudent.getReversedComparatorFor(function);
+        Arrays.sort(studentsToSort, comparator);
         return studentsToSort;
+    }
+
+    PreAcademyStudent[] createSevenPreAcademyStudents() {
+        return new PreAcademyStudent[]{
+                new PreAcademyStudent("A", "Z", 2, 3, 4),
+                new PreAcademyStudent("B", "Y", 2, 1, 4),
+                new PreAcademyStudent("C", "X", 5, 3, 2),
+                new PreAcademyStudent("D", "W", 4, 2, 3),
+                new PreAcademyStudent("E", "V", 3, 3, 3),
+                new PreAcademyStudent("F", "U", 2, 4, 5),
+                new PreAcademyStudent("D", "T", 3, 2, 4),
+        };
     }
 }

@@ -10,25 +10,13 @@ class Main {
         StudentApp app = new StudentApp();
 
 //        PreAcademyStudent[] preAcademyStudents = app.getStudentsFromConsole(4);
-        PreAcademyStudent[] preAcademyStudents = createSevenPreAcademyStudents();
+        PreAcademyStudent[] preAcademyStudents = app.createSevenPreAcademyStudents();
 
         printOrderedStudentsUsingFourOrderMethods(app, preAcademyStudents);
 
         printOrderedStudentsUsingOneOrderMethod(app, preAcademyStudents);
 
         printOrderedStudentsUsingMethodsChaining(app, preAcademyStudents);
-    }
-
-    private static PreAcademyStudent[] createSevenPreAcademyStudents() {
-        return new PreAcademyStudent[]{
-                new PreAcademyStudent("A", "Z", 2, 3, 4),
-                new PreAcademyStudent("B", "Y", 2, 1, 4),
-                new PreAcademyStudent("C", "X", 5, 3, 2),
-                new PreAcademyStudent("D", "W", 4, 2, 3),
-                new PreAcademyStudent("E", "V", 3, 3, 3),
-                new PreAcademyStudent("F", "U", 2, 4, 5),
-                new PreAcademyStudent("G", "T", 3, 2, 4),
-        };
     }
 
     private static void printOrderedStudentsUsingFourOrderMethods(StudentApp app,
