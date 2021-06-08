@@ -1,42 +1,104 @@
 package ua.andvel.preacademystudent;
 
 import java.util.Arrays;
-import java.util.Scanner;
-import java.util.stream.Stream;
 
 /**
  * @author Andrii Velychko
  */
 class Main {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
         StudentApp app = new StudentApp();
-//        PreAcademyStudent[] preAcademyStudents = app.createStudents(sc, 4);
-        PreAcademyStudent[] preAcademyStudents = {
-                new PreAcademyStudent("A", 2, 3, 4),
-                new PreAcademyStudent("B", 2, 1, 4),
-                new PreAcademyStudent("C", 5, 3, 2),
-                new PreAcademyStudent("D", 4, 2, 3),
-        };
 
-        System.out.println("Grading per all points: ");
-        PreAcademyStudent[] gradedStudentsPerAllPoints = app.gradeStudentsPerAllPoints(preAcademyStudents);
-        Arrays.stream(gradedStudentsPerAllPoints).forEach(x -> System.out.println(x));
+//        PreAcademyStudent[] preAcademyStudents = app.getStudentsFromConsole(4);
+        PreAcademyStudent[] preAcademyStudents = app.createSevenPreAcademyStudents();
 
-        System.out.println("Grading per lectures points: ");
-        PreAcademyStudent[] gradedStudentsPerLecturesPoints = app.gradeStudentsPerLecturesPoints(preAcademyStudents);
-        Arrays.stream(gradedStudentsPerLecturesPoints).forEach(x -> System.out.println(x));
+        printOrderedStudentsUsingFourOrderMethods(app, preAcademyStudents);
 
-        System.out.println("Grading per tasks points: ");
-        PreAcademyStudent[] gradedStudentsPerTasksPoints = app.gradeStudentsPerTasksPoints(preAcademyStudents);
-        Arrays.stream(gradedStudentsPerTasksPoints).forEach(x -> System.out.println(x));
+        printOrderedStudentsUsingOneOrderMethod(app, preAcademyStudents);
 
-        System.out.println("Grading per activity points: ");
-        PreAcademyStudent[] gradedStudentsPerActivityPoints = app.gradeStudentsPerActivityPoints(preAcademyStudents);
-        Arrays.stream(gradedStudentsPerActivityPoints).forEach(x -> System.out.println(x));
+        printOrderedStudentsUsingMethodsChaining(app, preAcademyStudents);
+    }
 
+    private static void printOrderedStudentsUsingFourOrderMethods(StudentApp app,
+                                                                  PreAcademyStudent[] preAcademyStudents) {
+        System.out.println("\nRunning printOrderedStudentsUsingFourOrderMethods:");
 
+        System.out.println("\nGrading per all points: ");
+        PreAcademyStudent[] orderedStudentsPerAllPoints = app.orderStudentsPerAllPoints(preAcademyStudents);
+        Arrays.stream(orderedStudentsPerAllPoints)
+                .forEach(System.out::println);
 
+        System.out.println("\nGrading per lectures points: ");
+        PreAcademyStudent[] orderedStudentsPerLecturesPoints = app.orderStudentsPerLecturesPoints(preAcademyStudents);
+        Arrays.stream(orderedStudentsPerLecturesPoints)
+                .forEach(System.out::println);
 
+        System.out.println("\nGrading per tasks points: ");
+        PreAcademyStudent[] orderedStudentsPerTasksPoints = app.orderStudentsPerTasksPoints(preAcademyStudents);
+        Arrays.stream(orderedStudentsPerTasksPoints)
+                .forEach(System.out::println);
+
+        System.out.println("\nGrading per activity points: ");
+        PreAcademyStudent[] orderedStudentsPerActivityPoints = app.orderStudentsPerActivityPoints(preAcademyStudents);
+        Arrays.stream(orderedStudentsPerActivityPoints)
+                .forEach(System.out::println);
+    }
+
+    private static void printOrderedStudentsUsingOneOrderMethod(StudentApp app,
+                                                                PreAcademyStudent[] preAcademyStudents) {
+        System.out.println("\nRunning printOrderedStudentsUsingOneOrderMethod:");
+
+        System.out.println("\nGrading per all points: ");
+        PreAcademyStudent[] orderedStudentsPerAllPoints = app.orderStudentsPer(PreAcademyStudent::totalPoints,
+                preAcademyStudents);
+        Arrays.stream(orderedStudentsPerAllPoints)
+                .forEach(System.out::println);
+
+        System.out.println("\nGrading per lectures points: ");
+        PreAcademyStudent[] orderedStudentsPerLecturesPoints = app.orderStudentsPer(PreAcademyStudent::lecturesPoints,
+                preAcademyStudents);
+        Arrays.stream(orderedStudentsPerLecturesPoints)
+                .forEach(System.out::println);
+
+        System.out.println("\nGrading per tasks points: ");
+        PreAcademyStudent[] orderedStudentsPerTasksPoints = app.orderStudentsPer(PreAcademyStudent::tasksPoints,
+                preAcademyStudents);
+        Arrays.stream(orderedStudentsPerTasksPoints)
+                .forEach(System.out::println);
+
+        System.out.println("\nGrading per activity points: ");
+        PreAcademyStudent[] orderedStudentsPerActivityPoints = app.orderStudentsPer(PreAcademyStudent::activityPoints,
+                preAcademyStudents);
+        Arrays.stream(orderedStudentsPerActivityPoints)
+                .forEach(System.out::println);
+    }
+
+    private static void printOrderedStudentsUsingMethodsChaining(StudentApp app,
+                                                                 PreAcademyStudent[] preAcademyStudents) {
+        System.out.println("\nRunning printOrderedStudentsUsingMethodsChaining:");
+
+        System.out.println("\nGrading per all points: ");
+        PreAcademyStudent[] orderedStudentsPerAllPoints = app.order(preAcademyStudents)
+                .per(PreAcademyStudent::totalPoints);
+        Arrays.stream(orderedStudentsPerAllPoints)
+                .forEach(System.out::println);
+
+        System.out.println("\nGrading per lectures points: ");
+        PreAcademyStudent[] orderedStudentsPerLecturesPoints = app.order(preAcademyStudents)
+                .per(PreAcademyStudent::lecturesPoints);
+        Arrays.stream(orderedStudentsPerLecturesPoints)
+                .forEach(System.out::println);
+
+        System.out.println("\nGrading per tasks points: ");
+        PreAcademyStudent[] orderedStudentsPerTasksPoints = app.order(preAcademyStudents)
+                .per(PreAcademyStudent::tasksPoints);
+        Arrays.stream(orderedStudentsPerTasksPoints)
+                .forEach(System.out::println);
+
+        System.out.println("\nGrading per activity points: ");
+        PreAcademyStudent[] orderedStudentsPerActivityPoints = app.order(preAcademyStudents)
+                .per(PreAcademyStudent::activityPoints);
+        Arrays.stream(orderedStudentsPerActivityPoints)
+                .forEach(System.out::println);
     }
 }

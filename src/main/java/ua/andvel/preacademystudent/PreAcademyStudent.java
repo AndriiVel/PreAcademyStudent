@@ -1,59 +1,57 @@
 package ua.andvel.preacademystudent;
 
+import java.util.Arrays;
 import java.util.Comparator;
+import java.util.function.ToIntFunction;
 
-/**
- * @author Andrii Velychko
- */
-class PreAcademyStudent implements Comparable<PreAcademyStudent> {
+record PreAcademyStudent(String firstName, String lastName, int lecturesPoints, int tasksPoints, int activityPoints,
+                         int totalPoints) implements Comparable<PreAcademyStudent> {
 
-    private final String name;
-    private final double lecturePoints;
-    private final double tasksPoints;
-    private final double activityPoints;
-    private int finalGrade;
-
-    PreAcademyStudent(String name, double lecturePoints, double tasksPoints, double activityPoints) {
-        this.name = name;
-        this.lecturePoints = lecturePoints;
+    /**
+     * The total points are calculated as a sum of all points.
+     * Students with the same grade are sorted by first name, based on a natural order.
+     *
+     * @param firstName      first name
+     * @param lastName       last name
+     * @param lecturesPoints total points for lectures
+     * @param tasksPoints    total points for tasks
+     * @param activityPoints total points for activity
+     * @see PreAcademyStudent#getTotalPoints(int...)
+     */
+    PreAcademyStudent(String firstName, String lastName, int lecturesPoints, int tasksPoints, int activityPoints,
+                      int totalPoints) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.lecturesPoints = lecturesPoints;
         this.tasksPoints = tasksPoints;
         this.activityPoints = activityPoints;
+        this.totalPoints = getTotalPoints(lecturesPoints, tasksPoints, activityPoints);
     }
 
-    static Comparator<PreAcademyStudent> getComparatorPerLecturePoints() {
-        // (o1, o2) -> Double.compare(o1.lecturePoints, o2.lecturePoints)
-        return Comparator.comparingDouble(o -> o.lecturePoints);
+    PreAcademyStudent(String firstName, String lastName, int lecturesPoints, int tasksPoints, int activityPoints) {
+        this(firstName, lastName, lecturesPoints, tasksPoints, activityPoints, 0);
     }
 
-    static Comparator<PreAcademyStudent> getComparatorPerTasksPoints() {
-        return Comparator.comparingDouble(o -> o.tasksPoints);
+    private int getTotalPoints(int... pointsTypes) {
+        return Arrays.stream(pointsTypes)
+                .sum();
     }
 
-    static Comparator<PreAcademyStudent> getComparatorPerActivityPoints() {
-        return Comparator.comparingDouble(o -> o.activityPoints);
-    }
-
-    double getAllPoints() {
-        return lecturePoints + tasksPoints + activityPoints;
+    /**
+     * Provides {@link Comparator} that uses the provided function based on which the comparison should be done.
+     *
+     * @param function a function that the Comparator will be based on
+     * @return         a Comparator of students
+     */
+    static Comparator<PreAcademyStudent> getReversedComparatorFor(ToIntFunction<PreAcademyStudent> function) {
+        return Comparator.comparingInt(function)
+                .reversed()
+                .thenComparing(PreAcademyStudent::firstName)
+                .thenComparing(PreAcademyStudent::lastName);
     }
 
     @Override
     public int compareTo(PreAcademyStudent o) {
-        return Double.compare(this.getAllPoints(), o.getAllPoints());
-    }
-
-    void setFinalGrade(int finalGrade) {
-        this.finalGrade = finalGrade;
-    }
-
-    @Override
-    public String toString() {
-        return "PreAcademyStudent{" +
-                "name='" + name + '\'' +
-                ", lecturePoints=" + lecturePoints +
-                ", tasksPoints=" + tasksPoints +
-                ", activityPoints=" + activityPoints +
-                ", finalGrade=" + finalGrade +
-                '}';
+        return Integer.compare(this.totalPoints(), o.totalPoints());
     }
 }
