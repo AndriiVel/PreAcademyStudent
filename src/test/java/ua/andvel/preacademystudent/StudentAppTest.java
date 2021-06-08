@@ -3,7 +3,6 @@ package ua.andvel.preacademystudent;
 import org.testng.annotations.Test;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotEquals;
@@ -12,7 +11,6 @@ import static org.testng.Assert.assertNotEquals;
  * @author Andrii Velychko
  */
 @Test
-
 public class StudentAppTest {
     PreAcademyStudent[] students = {
             new PreAcademyStudent("A", "Z", 1, 2, 1),
@@ -22,7 +20,6 @@ public class StudentAppTest {
             new PreAcademyStudent("Ba", "Wa", 4, 4, 4),
     };
     StudentApp app = new StudentApp();
-
 
     public void testOrderStudentsPerShouldOrderPerAllPoints() {
         PreAcademyStudent[] expectedStudentsOrder = {

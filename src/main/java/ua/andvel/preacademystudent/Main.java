@@ -10,12 +10,11 @@ class Main {
         StudentApp app = new StudentApp();
 
 //        PreAcademyStudent[] preAcademyStudents = app.getStudentsFromConsole(4);
-        PreAcademyStudent[] preAcademyStudents = app.createSevenPreAcademyStudents();
+//        PreAcademyStudent[] preAcademyStudents = app.createSevenPreAcademyStudents();
+        PreAcademyStudent[] preAcademyStudents = app.generatePreAcademyStudents(8);
 
         printOrderedStudentsUsingFourOrderMethods(app, preAcademyStudents);
-
         printOrderedStudentsUsingOneOrderMethod(app, preAcademyStudents);
-
         printOrderedStudentsUsingMethodsChaining(app, preAcademyStudents);
     }
 
